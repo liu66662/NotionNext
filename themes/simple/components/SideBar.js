@@ -1,26 +1,34 @@
-import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
-import Announcement from './Announcement'
-import Catalog from './Catalog'
-import WWAds from '@/components/WWAds'
+import { siteConfig } from '@/lib/config'
+import LazyImage from '@/components/LazyImage'
+import { useRouter } from 'next/router'
+import MenuGroupCard from './MenuGroupCard'
+import { MenuListSide } from './MenuListSide'
 
 /**
- * 侧边栏
- * @param {*} props
- * @returns
+ * 侧边抽屉
+ * @param tags
+ * @param currentTag
+ * @returns {JSX.Element}
+ * @constructor
  */
-export default function SideBar (props) {
-  const { notice } = props
-  return (<>
-
-            <Catalog {...props} />
-
-            <Live2D />
-
-            <Announcement post={notice} />
-
-            <AdSlot/>
-            <WWAds orientation="vertical" className="w-full" />
-
-    </>)
+const SideBar = (props) => {
+  const { siteInfo } = props
+  const router = useRouter()
+  return (
+        <div id='side-bar'>
+            <div className="h-52 w-full flex justify-center">
+                <div>
+                    <div onClick={() => { router.push('/') }}
+                        className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 dark:text-gray-100  transform duration-200 cursor-pointer'>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <LazyImage src={siteInfo?.icon} className='rounded-full' width={80} alt={siteConfig('AUTHOR')} />
+                    </div>
+                    <MenuGroupCard {...props} />
+                </div>
+            </div>
+            <MenuListSide {...props} />
+        </div>
+  )
 }
+
+export default SideBar

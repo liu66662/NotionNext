@@ -5,56 +5,65 @@
  * @returns
  */
 const Style = () => {
-  return <style jsx global>{`
-    
-  // 底色
-  .dark body{
-      background-color: black;
-  }
-  // 文本不可选取
-    .forbid-copy {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
-  
-  #theme-simple #announcement-content {
-    /* background-color: #f6f6f6; */
-  }
-  
-  #theme-simple .blog-item-title {
-    color: #276077;
-  }
-  
-  .dark #theme-simple .blog-item-title {
-    color: #d1d5db;
-  }
-  
-  .notion {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  
-  /*  菜单下划线动画 */
-  #theme-simple .menu-link {
-      text-decoration: none;
-      background-image: linear-gradient(#dd3333, #dd3333);
-      background-repeat: no-repeat;
-      background-position: bottom center;
-      background-size: 0 2px;
-      transition: background-size 100ms ease-in-out;
-  }
-   
-  #theme-simple .menu-link:hover {
-      background-size: 100% 2px;
-      color: #dd3333;
-      cursor: pointer;
-  }
-  
-  
+  return (
+    <style jsx global>{`
+      body {
+        background-color: #f7f9fe;
+        overflow-x: hidden;
+      }
 
-  `}</style>
+      // 公告栏中的字体固定白色
+      #theme-heo #announcement-content .notion {
+        color: white;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(60, 60, 67, 0.4);
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      #more {
+        white-space: nowrap;
+      }
+
+      .today-card-cover {
+        -webkit-mask-image: linear-gradient(to top, transparent 5%, black 70%);
+        mask-image: linear-gradient(to top, transparent 5%, black 70%);
+      }
+
+      .recent-top-post-group::-webkit-scrollbar {
+        display: none;
+      }
+
+      .scroll-hidden::-webkit-scrollbar {
+        display: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      // 标签滚动动画
+      .tags-group-wrapper {
+        animation: rowup 60s linear infinite;
+      }
+
+      @keyframes rowup {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    `}</style>
+  )
 }
 
 export { Style }

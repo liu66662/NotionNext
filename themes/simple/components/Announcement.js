@@ -3,11 +3,16 @@ import dynamic from 'next/dynamic'
 const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
 const Announcement = ({ post, className }) => {
-  if (!post) {
+  if (post?.blockMap) {
+    return <div >
+            {post && (
+                <div id="announcement-content">
+                    <NotionPage post={post} />
+                </div>
+            )}
+        </div>
+  } else {
     return <></>
   }
-  return <>{post && (<div id="announcement-content" className='px-3'>
-        <NotionPage post={post} />
-    </div>)} </>
 }
 export default Announcement

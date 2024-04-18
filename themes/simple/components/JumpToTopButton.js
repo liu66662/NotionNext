@@ -1,5 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import { useEffect, useState } from 'react'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到网页顶部
@@ -9,27 +10,16 @@ import { useEffect, useState } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTopButton = () => {
+const JumpToTopButton = ({ showPercent = true, percent }) => {
   const { locale } = useGlobal()
-  const [show, switchShow] = useState(false)
-  const scrollListener = () => {
-    const scrollY = window.pageYOffset
-    const shouldShow = scrollY > 200
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
+
+  if (!siteConfig('HEO_WIDGET_TO_TOP', null, CONFIG)) {
+    return <></>
   }
-
-  useEffect(() => {
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
-
-  return <div title={locale.POST.TOP}
-        className={(show ? ' opacity-100 ' : 'invisible  opacity-0') + ' transition-all duration-300 flex items-center justify-center cursor-pointer bg-black h-10 w-10 bg-opacity-40 rounded-sm'}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    ><i className='fas fa-angle-up text-white ' />
-    </div>
+  return (<div className='space-x-1 items-center justify-center transform hover:scale-105 duration-200 w-7 h-auto pb-1 text-center' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
+        <div title={locale.POST.TOP} ><i className='fas fa-arrow-up text-xs' /></div>
+        {showPercent && (<div className='text-xs hidden lg:block'>{percent}</div>)}
+    </div>)
 }
 
 export default JumpToTopButton
